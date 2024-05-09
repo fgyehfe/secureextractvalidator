@@ -1,34 +1,15 @@
-function solveSudoku(board) {
-  solve(board);
-  function solve(board) {
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (board[i][j] === ".") {
-          for (let num = 1; num <= 9; num++) {
-            const char = num.toString();
-            if (isValid(board, i, j, char)) {
-              board[i][j] = char;
-              if (solve(board)) return true;
-              board[i][j] = ".";
-            }
-          }
-          return false;
-        }
-      }
-    }
-    return true;
+function uniquePaths(m, n) {
+  const dp = Array.from(Array(m), () => Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    dp[i][0] = 1;
   }
-  function isValid(board, row, col, char) {
-    for (let i = 0; i < 9; i++) {
-      if (
-        board[row][i] === char ||
-        board[i][col] === char ||
-        board[3 * Math.floor(row / 3) + Math.floor(i / 3)][
-          3 * Math.floor(col / 3) + (i % 3)
-        ] === char
-      )
-        return false;
-    }
-    return true;
+  for (let j = 0; j < n; j++) {
+    dp[0][j] = 1;
   }
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+    }
+  }
+  return dp[m - 1][n - 1];
 }
