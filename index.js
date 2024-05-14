@@ -1,10 +1,13 @@
-function minimumTotal(triangle) {
-  const n = triangle.length;
-  const dp = new Array(n + 1).fill(0);
-  for (let i = n - 1; i >= 0; i--) {
-    for (let j = 0; j <= i; j++) {
-      dp[j] = triangle[i][j] + Math.min(dp[j], dp[j + 1]);
-    }
+const stoogeSort = (arr, i = 0, j = arr.length - 1) => {
+  if (arr[i] > arr[j]) {
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return dp[0];
-}
+  if (i + 1 >= j) {
+    return arr;
+  }
+  const t = Math.floor((j - i + 1) / 3);
+  stoogeSort(arr, i, j - t);
+  stoogeSort(arr, i + t, j);
+  stoogeSort(arr, i, j - t);
+  return arr;
+};
